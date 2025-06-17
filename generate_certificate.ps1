@@ -3,7 +3,8 @@
 
 # Récupération du fichier de configuration
 $configPath = "sco-config.json"
-$clientName = $configPath.clientName # Le nom du client ne doit ni contenir d'espace ni contenir de majuscules
+$config = Get-Content $configPath | ConvertFrom-Json
+$clientName = $config.clientName # Le nom du client ne doit ni contenir d'espace ni contenir de majuscules
 $hostname = "$clientName.signaturecomptabilite.fr".ToLower()
 
 # Création du répertoire de certificats
