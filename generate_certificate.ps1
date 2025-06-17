@@ -1,6 +1,11 @@
 # Initialisation
 .\init_generate_certificate.ps1
 
+# Récupération du fichier de configuration
+$configPath = "sco-config.json"
+$clientName = $config.clientName # Le nom du client ne doit ni contenir d'espace ni contenir de majuscules
+$hostname = "$clientName.signaturecomptabilite.fr".ToLower()
+
 # Création du répertoire de certificats
 $certDir = "$env:USERPROFILE\certs\"
 mkdir $certDir -Force
@@ -14,7 +19,7 @@ openssl req -x509 -new -nodes -key sco-ca.key -sha256 -days 36500 -out sco-ca.cr
 openssl genrsa -out sco-server.key 4096
 
 # Générer une CSR (Certificate Signing Request)
-openssl req -new -key sco-server.key -out sco-server.csr -subj "/C=FR/ST=Rhone/L=Lyon/O=FiducialInformatique/CN=localhost"
+openssl req -new -key sco-server.key -out sco-server.csr -subj "/C=FR/ST=Rhone/L=Lyon/O=FiducialInformatique/CN=$hostname"
 
 # Signer le certificat serveur avec la CA
 openssl x509 -req -in sco-server.csr -CA sco-ca.crt -CAkey sco-ca.key -CAcreateserial -out sco-server.crt -days 36500 -sha256
