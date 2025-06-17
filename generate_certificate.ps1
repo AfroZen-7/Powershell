@@ -27,3 +27,5 @@ openssl x509 -req -in sco-server.csr -CA sco-ca.crt -CAkey sco-ca.key -CAcreates
 
 # Nettoyage
 rm sco-server.csr
+
+cd ..
